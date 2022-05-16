@@ -4,6 +4,9 @@ I denne workshoppen lærer du deg hvordan kubernetes-plattformen brukes til å k
 levere tjenester uten driftsstans.
 
 ## Innhold
+
+1. [Introduksjon](intro.md)
+
 En intro om hva kubernets tilbyr. Etter introduksjonen arbeides det idividuelt med oppgaver.
 Gjennom oppgavene vil du lære deg å leverer en applikasjon i kubernetes og gjøre en rullende
 oppdatering av applikasjonen uten brudd på tjenesten.
