@@ -5,6 +5,7 @@ file_to_apply=${1:-}
 
 export client=imac
 export domain=arve.dev
+export users=arve,frida,yngvild
 
 function main {
   # 2021.04.25-21:13:50
