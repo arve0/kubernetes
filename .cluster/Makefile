@@ -2,6 +2,7 @@ DOMAIN ?= workshop.arve.dev
 NODE_COUNT = 1
 EMAIL ?= arve+workshop@seljebu.no
 USERNAME ?= arve
+USERS := $(shell cat usernames | sed 's|^|users/|')
 
 all: ingress cert-manager letsencrypt registry registry-login docker-pull-secret
 
@@ -129,5 +130,45 @@ usernames:
 		| grep '^[^aeiouy][aeiouy][^aeiouy]\+[aeiouy][^aeiouy]$$' \
 		> usernames
 	rm boys.txt girls.txt baby-names.csv
+
+cluster/ca: cluster/kubeconfig
+	yq .clusters[0].cluster.certificate-authority-data cluster/kubeconfig > cluster/ca
+
+cluster/server: cluster/kubeconfig
+	yq .clusters[0].cluster.server cluster/kubeconfig > cluster/server
+
+cluster/workshop-role:
+	kubectl create clusterrole workshop --verb="*" --resource=pods
+	touch cluster/workshop-role
+
+users: ${USERS}
+${USERS}: home-kubeconfig cluster/ca cluster/server cluster/workshop-role
+	mkdir -p $@
+	# create private key
+
+	openssl genrsa -out $@/key 2048
+	# create CertificateSigningRequest
+	user=$(subst users/,,$@) envsubst < user.csr.cnf > $@/csr.cnf
+	openssl req -new -config $@/csr.cnf -key $@/key -out $@/csr
+	# create CertificateSigningRequest in cluster
+	kubectl delete csr $(subst users/,,$@)-authentication || true
+	user=$(subst users/,,$@) \
+		csr=$$(cat $@/csr | base64 | tr -d '\n') \
+		envsubst < user-authentication.yaml \
+		| kubectl apply -f-
+	# approve CertificateSigningRequest in cluster
+	kubectl certificate approve $(subst users/,,$@)-authentication
+	# copy certificate to user folder
+	kubectl get csr $(subst users/,,$@)-authentication -o jsonpath='{.status.certificate}' | base64 --decode > $@/crt
+	# create kubeconfig
+	user=$(subst users/,,$@) \
+		ca=$$(cat cluster/ca) \
+		server=$$(cat cluster/server) \
+		crt=$$(cat $@/crt | base64 | tr -d '\n') \
+		key=$$(cat $@/key | base64 | tr -d '\n') \
+		envsubst < user.kubeconfig > $@/kubeconfig
+	kubectl create namespace $(subst users/,,$@) || true
+	kubectl create rolebinding workshop --namespace $(subst users/,,$@) --clusterrole=workshop --user=$(subst users/,,$@)
+	KUBECONFIG=$@/kubeconfig kubectl get pods
 
 FORCE:
