@@ -1,0 +1,6 @@
+resources:
+- namespace.yaml
+- ingress.yaml
+
+patchesStrategicMerge:
+- digital-ocean.yaml

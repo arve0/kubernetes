@@ -4,7 +4,7 @@ EMAIL ?= arve+workshop@seljebu.no
 USERNAME ?= arve
 USERS := $(shell cat usernames | sed 's|^|users/|')
 
-all: ingress cert-manager letsencrypt registry registry-login docker-pull-secret
+all: ingress cert-manager letsencrypt registry
 
 cluster/region:
 	doctl kubernetes options regions \
@@ -42,10 +42,12 @@ cluster/install: cluster/region cluster/size cluster/version
 cluster/kubeconfig: cluster/install
 	doctl kubernetes cluster kubeconfig show $(subst .,-,${DOMAIN}) \
 		| tee cluster/kubeconfig
+	chmod go-rwx cluster/kubeconfig
 
 home-kubeconfig: cluster/kubeconfig
 	mv $$HOME/.kube/config $$HOME/.kube/config.backup
 	cp cluster/kubeconfig $$HOME/.kube/config
+	chmod go-rwx $$HOME/.kube/config
 
 ingress/ingress.yaml:
 	helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx

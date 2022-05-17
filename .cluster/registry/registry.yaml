@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: registry
+  labels:
+    app: registry
+spec:
+  selector:
+    matchLabels:
+        app: registry
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: registry
+    spec:
+      volumes:
+      - name: registry
+        persistentVolumeClaim:
+          claimName: registry
+      containers:
+      - image: registry:2
+        name: registry
+        volumeMounts:
+        - name: registry
+          mountPath: /var/lib/registry
+        ports:
+        - name: http
+          containerPort: 5000
+          protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /v2
+            port: 5000
+        readinessProbe:
+          httpGet:
+            path: /v2
+            port: 5000
+        resources:
+          limits:
+            memory: 100Mi
+          requests:
+            cpu: 1m
+            memory: 20Mi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: registry
+spec:
+  resources:
+    requests:
+      storage: 10Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: registry
+spec:
+  selector:
+    app: registry
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: http
+    # avoid kaniko hang
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: http
