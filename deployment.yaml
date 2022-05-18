@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hei
+  labels:
+    app: hei
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: hei
+  template:
+    metadata:
+      labels:
+        app: hei
+    spec:
+      containers:
+      - name: hei
+        image: busybox
+        resources: {}
+        command: ["/bin/sh"]
+        args: ["-c", "while true; do echo hei; sleep 10; done"]
