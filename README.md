@@ -6,6 +6,9 @@ levere tjenester uten driftsstans.
 ## Innhold
 
 1. [Introduksjon](intro.md)
+2. [Kom i gang](start.md)
+
+NESTE: Sett namespace i context. Opprett namespace. RBAC for namespace.
 
 En intro om hva kubernets tilbyr. Etter introduksjonen arbeides det idividuelt med oppgaver.
 Gjennom oppgavene vil du lære deg å leverer en applikasjon i kubernetes og gjøre en rullende
