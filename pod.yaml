@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hei
+spec:
+  restartPolicy: Never
+  containers:
+  - name: hei
+    image: busybox
+    resources: {}
+    command:
+    - echo
+    - hei
+    - verden
+  - name: hallo
+    image: busybox
+    resources: {}
+    command:
+    - echo
+    - hei
+    - trondheim

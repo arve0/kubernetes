@@ -8,25 +8,24 @@ levere tjenester uten driftsstans.
 1. [Introduksjon](intro.md)
 2. [Kom i gang](start.md)
 
-NESTE: Sett namespace i context. Opprett namespace. RBAC for namespace.
-
+## Kursbeskrivelse
 En intro om hva kubernets tilbyr. Etter introduksjonen arbeides det idividuelt med oppgaver.
 Gjennom oppgavene vil du lære deg å leverer en applikasjon i kubernetes og gjøre en rullende
 oppdatering av applikasjonen uten brudd på tjenesten.
 
 Workshoppen avsluttes med en kahoot.
 
-## Oppnådd kompetanse
+### Oppnådd kompetanse
 - Vet hensikten med abstraksjonene Deployment, ReplicaSet, Pod og container.
 - Kan levere en applikasjon til et Kubernetes cluster med en Deployment.
 - Kan rute trafikk til tjenesten innad i cluster med en Service.
 - Kan rute trafikk til tjenesten utad clusteret med en Ingress.
 - Kan gjøre en rullende oppdatering av applikasjonen uten brudd på tjenesten.
 
-## Forhåndskunnskap
+### Forhåndskunnskap
 Deltaker burde ha kjennskap til hvordan en bygger og publiserer en applikasjon som et Docker image.
 
-## Nødvendig programvare
+### Nødvendig programvare
 Dette burde du ha installert på din PC for å utnytte tiden best under workshoppen:
 
 - docker eller podman
