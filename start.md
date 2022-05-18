@@ -71,12 +71,13 @@ med git.
 Opprett en pod fra pod.yaml:
 
 ```sh
-kubectl apply -f pod.yaml
+kubectl create -f pod.yaml
 ```
 
-Merk: Fikk du feilmeldingen *Forbidden: pod updates may not add or remove containers*? Da må du slette pod først. Neste steg bruker `Deployment` som lar seg endre.
+Merk: Fikk du feilmeldingen *AlreadyExists*? Da må du slette pod først. Neste steg bruker `Deployment` som er mulig å endre.
 
 - Hva ble navn på pod?
-- Hvor mange containere kjører den?
-- Logger den noe? Hint: bruk `--container`.
 - Hva er status til pod?
+- Hvor mange containere kjører den?
+- Hva deler containerne? Hint: Les [pod.yaml](pod.yaml).
+- Logger den noe? Hint: bruk `--container` eller `-c`.

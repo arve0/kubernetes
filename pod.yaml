@@ -4,18 +4,34 @@ metadata:
   name: hei
 spec:
   restartPolicy: Never
+  # Containerene kan dele localhost og filsystem.
+  #
+  # Det kan være nyttig for å prossesere filer i en container,
+  # mens den andre containeren tar seg av nettverkstrafikken.
+  #
+  # Her oppretter vi et volum *shared-data* på noden der pod kjører som brukes
+  # i begge containerne.
+  #
+  # Ressurser:
+  # - Patterns for Composite Containers: https://kubernetes.io/blog/2015/06/the-distributed-system-toolkit-patterns/
+  # - Volumes: https://kubernetes.io/docs/concepts/storage/volumes/
+  volumes:
+  - name: shared-data
+    emptyDir: {}
   containers:
   - name: hei
     image: busybox
     resources: {}
-    command:
-    - echo
-    - hei
-    - verden
+    volumeMounts:
+    - name: shared-data
+      mountPath: /shared-data
+    command: ["/bin/sh"]
+    args: ["-c", "echo sover 2 sekund; sleep 2; cat /shared-data/prossesert-fil.txt"]
   - name: hallo
     image: busybox
     resources: {}
-    command:
-    - echo
-    - hei
-    - trondheim
+    volumeMounts:
+    - name: shared-data
+      mountPath: /shared-data
+    command: ["/bin/sh"]
+    args: ["-c", "echo Hei fra Trondheim; echo Hei fra hallo-container > /shared-data/prossesert-fil.txt"]
