@@ -143,7 +143,7 @@ cluster/workshop-role:
 	kubectl create clusterrole workshop --verb="*" --resource=pods
 	touch cluster/workshop-role
 
-users: ${USERS}
+users: rbac ${USERS}
 ${USERS}: home-kubeconfig cluster/ca cluster/server cluster/workshop-role
 	mkdir -p $@
 	# create private key
@@ -170,7 +170,12 @@ ${USERS}: home-kubeconfig cluster/ca cluster/server cluster/workshop-role
 		key=$$(cat $@/key | base64 | tr -d '\n') \
 		envsubst < user.kubeconfig > $@/kubeconfig
 	kubectl create namespace $(subst users/,,$@) || true
-	kubectl create rolebinding workshop --namespace $(subst users/,,$@) --clusterrole=workshop --user=$(subst users/,,$@)
+	user=$(subst users/,,$@) \
+		envsubst < rbac-user.yaml \
+		| kubectl apply -f-
 	KUBECONFIG=$@/kubeconfig kubectl get pods
+
+rbac:
+	kubectl apply -f rbac-common.yaml
 
 FORCE:
