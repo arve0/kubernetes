@@ -1,0 +1,79 @@
+---
+# De tre bindestrekene angir at vi har en liste med ressurser.
+apiVersion: v1
+kind: Service
+metadata:
+  name: server-a
+spec:
+  selector:
+    app: server-a
+  ports:
+  - port: 80 # port til service
+    protocol: TCP
+    # Port på pod, enten navn eller nummer.
+    # Navn lar oss endre port på pod uten å endre service.
+    targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server-a
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: server-a
+  template:
+    metadata:
+      labels:
+        app: server-a
+    spec:
+      containers:
+      - name: server-a
+        # implementasjonen ligger i server/server.js
+        image: registry.apps.workshop.arve.dev/server
+        resources: {}
+        env:
+        - name: NAME
+          value: server-a
+        ports:
+        - name: http
+          containerPort: 8080
+---
+# gjentar det over med navnet "server-b"
+apiVersion: v1
+kind: Service
+metadata:
+  name: server-b
+spec:
+  selector:
+    app: server-b
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server-b
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: server-b
+  template:
+    metadata:
+      labels:
+        app: server-b
+    spec:
+      containers:
+      - name: server-b
+        image: registry.apps.workshop.arve.dev/server
+        resources: {}
+        env:
+        - name: NAME
+          value: server-b
+        ports:
+        - name: http
+          containerPort: 8080

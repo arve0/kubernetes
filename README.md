@@ -8,6 +8,7 @@ levere tjenester uten driftsstans.
 1. [Introduksjon](intro.md)
 2. [Kom i gang](start.md)
 3. [Deployments](deployment.md)
+4. [Intern trafikk](intern-trafikk.md)
 
 ## Kursbeskrivelse
 En intro om hva kubernets tilbyr. Etter introduksjonen arbeides det idividuelt med oppgaver.

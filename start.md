@@ -1,8 +1,9 @@
 # kom i gang
-Når du er ferdig med dette steget skal du kunne bruke
+Når du er ferdig med oppgavene denne siden skal du kunne bruke
 [`kubectl`](https://kubectl.docs.kubernetes.io) til å administrere
 ressurser på kurs-clusteret.
 
+0. Klon dette repoet.
 1. Send en melding på slack til Arve og be om kubeconfig.
 2. Lagre output fra Arve til ~/.kube/config.
 3. Hent pods med `kubectl`:

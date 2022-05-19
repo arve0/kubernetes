@@ -16,7 +16,7 @@ const server = http.createServer((request, response) => {
     const host = url.pathname
       .slice(1)
       .toLowerCase()
-      .replace(/[^a-z]+/g, "");
+      .replace(/[^a-z\.-]+/g, "");
 
     http
       .request({ host, path: "/" }, handleGet(response))

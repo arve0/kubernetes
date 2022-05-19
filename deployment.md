@@ -1,6 +1,11 @@
 # deployment
+Når du er ferdig med oppgavene denne siden skal du kunne bruke
+[`Deployment`](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
+for å kjøre en tjeneste, samt endre tjenesten i dens livsløp.
+
+## Om Deployment
 Pod har svært begrenset ansvar. Du merket kanskje at pod ikke kan endres etter den var opprettet?
-[Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) fyller behovet for å endre en tjeneste.
+`Deployment`](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)` fyller behovet for å endre en tjeneste.
 
 Lik pod, har også `Deployment` en `spec`:
 
