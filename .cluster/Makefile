@@ -155,7 +155,7 @@ cluster/workshop-role:
 	touch cluster/workshop-role
 
 users: ${USERS}
-${USERS}: home-kubeconfig rbac cluster/ca cluster/server cluster/workshop-role
+${USERS}: home-kubeconfig rbac cluster/ca cluster/server cluster/workshop-role registry/password
 	mkdir -p $@
 	# create private key
 
@@ -184,9 +184,20 @@ ${USERS}: home-kubeconfig rbac cluster/ca cluster/server cluster/workshop-role
 	user=$(subst users/,,$@) \
 		envsubst < rbac-user.yaml \
 		| kubectl apply -f-
-	KUBECONFIG=$@/kubeconfig kubectl get pods
+	KUBECONFIG=$@/kubeconfig kubectl run sleeping-beauty --image=busybox --command -- sleep 2592000 || true
+	KUBECONFIG=$@/kubeconfig kubectl delete secret registry-credentials || true
+	KUBECONFIG=$@/kubeconfig kubectl create secret docker-registry registry-credentials \
+		--docker-server=registry.apps.${DOMAIN} \
+		--docker-username=${USERNAME} \
+		--docker-password=$$(cat registry/password)
+	KUBECONFIG=$@/kubeconfig kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "registry-credentials"}]}'
 
 rbac:
 	kubectl apply -f rbac-common.yaml
+
+server: registry-login
+	docker build -t server ../server
+	docker tag server registry.apps.${DOMAIN}/server
+	docker push registry.apps.${DOMAIN}/server
 
 FORCE:

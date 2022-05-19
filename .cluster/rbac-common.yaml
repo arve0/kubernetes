@@ -9,7 +9,10 @@ rules:
   - configmaps
   - secrets
   - services
+  - serviceaccounts
   - pods
+  - pods/exec
+  - pods/portforward
   verbs:
   - "*"
 - apiGroups:
