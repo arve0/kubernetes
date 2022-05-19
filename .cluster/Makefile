@@ -2,7 +2,8 @@ DOMAIN ?= workshop.arve.dev
 NODE_COUNT = 1
 EMAIL ?= arve+workshop@seljebu.no
 USERNAME ?= arve
-USERS := $(shell cat usernames | sed 's|^|users/|')
+NUMBER_OF_USERS ?= 10
+USERS := $(shell cat usernames 2>/dev/null | sed 's|^|users/|')
 
 all: ingress cert-manager letsencrypt registry
 
@@ -45,9 +46,11 @@ cluster/kubeconfig: cluster/install
 	chmod go-rwx cluster/kubeconfig
 
 home-kubeconfig: cluster/kubeconfig
-	mv $$HOME/.kube/config $$HOME/.kube/config.backup
-	cp cluster/kubeconfig $$HOME/.kube/config
-	chmod go-rwx $$HOME/.kube/config
+	if [[ $$(sha1sum cluster/kubeconfig) != "$$(sha1sum $$HOME/.kube/config)" ]]; then \
+		mv $$HOME/.kube/config $$HOME/.kube/config.backup; \
+		cp cluster/kubeconfig $$HOME/.kube/config; \
+		chmod go-rwx $$HOME/.kube/config; \
+	fi
 
 ingress/ingress.yaml:
 	helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
@@ -120,18 +123,26 @@ docker-pull-secret: registry/password
 		--docker-password=$$(cat registry/password)
 	kubectl patch serviceaccount default -n default -p '{"imagePullSecrets": [{"name": "registry-credentials"}]}'
 
-usernames:
+adjectives.txt:
+	curl -L https://gist.githubusercontent.com/hugsy/8910dc78d208e40de42deb29e62df913/raw/eec99c5597a73f6a9240cab26965a8609fa0f6ea/english-adjectives.txt \
+		> adjectives.txt
+
+names.txt:
 	curl -L https://github.com/hadley/data-baby-names/raw/master/baby-names.csv \
-		| grep 2000 > baby-names.csv
+		| grep 20 \
+		> baby-names.csv
 	grep boy baby-names.csv > boys.txt
 	grep girl baby-names.csv > girls.txt
 	paste -d '\n' boys.txt girls.txt \
 		| cut -f2 -d, \
 		| tr -d '"' \
 		| tr '[:upper:]' '[:lower:]' \
-		| grep '^[^aeiouy][aeiouy][^aeiouy]\+[aeiouy][^aeiouy]$$' \
-		> usernames
+		| sort | uniq \
+		> names.txt
 	rm boys.txt girls.txt baby-names.csv
+
+usernames: adjectives.txt names.txt random-usernames.sh
+	./random-usernames.sh ${NUMBER_OF_USERS} > usernames
 
 cluster/ca: cluster/kubeconfig
 	yq .clusters[0].cluster.certificate-authority-data cluster/kubeconfig > cluster/ca
@@ -143,8 +154,8 @@ cluster/workshop-role:
 	kubectl create clusterrole workshop --verb="*" --resource=pods
 	touch cluster/workshop-role
 
-users: rbac ${USERS}
-${USERS}: home-kubeconfig cluster/ca cluster/server cluster/workshop-role
+users: ${USERS}
+${USERS}: home-kubeconfig rbac cluster/ca cluster/server cluster/workshop-role
 	mkdir -p $@
 	# create private key
 
