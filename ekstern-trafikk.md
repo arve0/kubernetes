@@ -55,16 +55,16 @@ Sjekk at `Ingress` fungerer:
 
 ```sh
 ❯ curl a-<brukernavn>.apps.workshop.arve.dev/
-jeg er service server-a
+jeg er server-a
 
 ❯ curl b-<brukernavn>.apps.workshop.arve.dev/
-jeg er service server-b
+jeg er server-b
 
 ❯ curl a-<brukernavn>.apps.workshop.arve.dev/server-b
-jeg er service server-b
+jeg er server-b
 
 ❯ curl b-<brukernavn>.apps.workshop.arve.dev/server-a
-jeg er service server-a
+jeg er server-a
 ```
 
 ## Send trafikk fra en host til ulike services
@@ -131,14 +131,16 @@ Sjekk at den fungerer:
 
 ```sh
 ❯ curl <brukernavn>.apps.workshop.arve.dev/a
-jeg er service server-a
+jeg er server-a
 
 ❯ curl <brukernavn>.apps.workshop.arve.dev/a/server-b
-jeg er service server-b
+jeg er server-b
 
 ❯ curl <brukernavn>.apps.workshop.arve.dev/b
-jeg er service server-b
+jeg er server-b
 
 ❯ curl <brukernavn>.apps.workshop.arve.dev/b/server-a
-jeg er service server-a
+jeg er server-a
 ```
+
+[Neste oppgave endrer tjenesten mens den er live.](rullerende-deployment.md)

@@ -23,7 +23,7 @@ const server = http.createServer((request, response) => {
       .on("error", handleError(response))
       .end();
   } else {
-    response.write(`jeg er service ${name}\n`);
+    response.write(`jeg er ${name}\n`);
     response.end();
   }
 });
