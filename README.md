@@ -33,6 +33,5 @@ Deltaker burde ha kjennskap til hvordan en bygger og publiserer en applikasjon s
 ### Nødvendig programvare
 Dette burde du ha installert på din PC for å utnytte tiden best under workshoppen:
 
-- docker eller podman
+- [kubectl](https://kubectl.docs.kubernetes.io/installation/kubectl/)
 - teksteditor med YAML-støtte
-- kubectl
