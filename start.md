@@ -32,6 +32,18 @@ Alle kommandoer har `--help`:
 kubectl get --help
 ```
 
+`kubectl explain` gir en forklarer ressurser:
+
+```sh
+kubectl explain pod
+```
+
+En kan også be om hjelp for et spesifikt felt:
+
+```sh
+kubectl explain pod.spec.containers
+```
+
 ## Status til pod
 `kubectl describe` gir en formatert variant av `yaml` eller `json` serialiseringen:
 
@@ -87,10 +99,12 @@ Opprett en pod fra pod.yaml:
 kubectl create -f pod.yaml
 ```
 
-Merk: Fikk du feilmeldingen *AlreadyExists*? Da må du slette poden først. Neste steg bruker `Deployment` som er mulig å endre.
+Merk: Fikk du feilmeldingen *AlreadyExists*? Da må du slette poden først. [Neste steg](deployment.md) bruker `Deployment` som er mulig å endre.
 
 - Hva ble navn på pod?
 - Hva er status til pod?
 - Hvor mange containere kjører den?
 - Hva deler containerne? Hint: Les [pod.yaml](pod.yaml).
 - Logger den noe? Hint: bruk `--container` eller `-c`.
+
+[Neste oppgave er Deployments.](deployment.md)
