@@ -56,6 +56,7 @@ home-kubeconfig: cluster/kubeconfig
 ingress/ingress.yaml:
 	helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 	helm template ingress-nginx ingress-nginx/ingress-nginx \
+		--set controller.ingressClassResource.default=true \
 		--namespace ingress-nginx \
 		> ingress/ingress.yaml
 
