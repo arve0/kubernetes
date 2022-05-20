@@ -1,11 +1,11 @@
-# deployment
-Når du er ferdig med oppgavene denne siden skal du kunne bruke
+# Deployment
+Når du er ferdig med oppgavene på denne siden skal du kunne bruke
 [`Deployment`](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
 for å kjøre en tjeneste, samt endre tjenesten i dens livsløp.
 
 ## Om Deployment
-Pod har svært begrenset ansvar. Du merket kanskje at pod ikke kan endres etter den var opprettet?
-`Deployment`](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)` fyller behovet for å endre en tjeneste.
+Pod har svært begrenset ansvar. Du merket kanskje at poden ikke kunne endres etter den var opprettet?
+[`Deployment`](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) fyller behovet for å endre en tjeneste.
 
 Lik pod, har også `Deployment` en `spec`:
 
@@ -43,7 +43,7 @@ I tillegg har vi `repliacas`, `selector` og `template.metadata`.
 `selector` sier hvordan deployment-controlleren skal finne pods som er sine. Her er det vanlig
 å bruke samme navn som tjenesten. `tempalte.metadata` setter den aktuelle labelen på `Pod`.
 
-Resulterende `Pod` blir noe slikt som (har fjernet detaljer som er uviktige):
+Resulterende `Pod` blir noe slikt som under *(har fjernet detaljer som er uviktige)*:
 
 ```yaml
 apiVersion: v1
@@ -62,22 +62,22 @@ spec:
 ```
 
 Ved endring av `Deployment` vil ny `Pod` opprettes og feltet `metadata.labels.app` brukes
-for å rydde opp i gamle pods som ikke trenger kjøre mer.
+for å rydde opp i gamle pods som ikke trenger å kjøre mer.
 
 ## Opprette en deployment
-`kubectl apply` brukes som samlekommando for opprette eller endre. Opprett `Deployment`
+`kubectl apply` brukes som samlekommando for å opprette eller endre. Opprett `Deployment`
 spesifisert i `deployment.yaml`:
 
 ```sh
 kubectl apply -f deployment.yaml
 ```
 
-- Hva skjer om du kjører kommando flere ganger?
+- Hva skjer om du kjører kommandoen flere ganger?
 - Se om du finner tilhørende pods med `kubectl get pods --selector app=hei`.
 - Hva skjer om du sletter pods med `kubectl delete pods --selector app=hei --wait=false`?
 
 ## Endre en deployment
-Åpne [deployment.yaml] og endre spesifikasjonen til å skrive ut dato istedenfor "hei".
+Åpne [deployment.yaml] og endre spesifikasjonen til å skrive ut dato istedenfor *"hei"*.
 
 Oppdater clusteret med den nye spesifikasjonen:
 
@@ -85,7 +85,7 @@ Oppdater clusteret med den nye spesifikasjonen:
 kubectl apply -f deployment.yaml
 ```
 
-Ser du pods i med ulike statuser *ContainerCreating*, *Terminating* og *Running*?
+Ser du pods med ulike statuser slik som *ContainerCreating*, *Terminating* og *Running*?
 
 ## ReplicaSet
 `replicas` som settes i `Deployment` kontrolleres av `ReplicaSet`. Oppgaven til

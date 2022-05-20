@@ -1,5 +1,5 @@
-# intern trafikk
-Når du er ferdig med oppgavene denne siden skal du kunne bruke
+# Intern trafikk
+Når du er ferdig med oppgavene på denne siden skal du kunne bruke
 [`Service`](https://kubernetes.io/docs/concepts/services-networking/service/)
 til å rute trafikk internt i cluster til podene som kjører tjenesten.
 
@@ -74,7 +74,7 @@ I dette kurset har hver deltaker et eget namespace.
 
 Tjenester i andre namespace kan nås via *service.namespace*, eksempelvis *server-a.elegant-denzil*.
 
-Spør sidemannen om brukernavnet sitt og se om du når tjenestene hans:
+Spør sidemannen om brukernavnet sitt og se om du når tjenestene dems:
 
 ```sh
 curl localhost:8080/server-a.<brukernavn>
