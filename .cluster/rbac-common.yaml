@@ -11,6 +11,7 @@ rules:
   - services
   - serviceaccounts
   - pods
+  - pods/attach
   - pods/exec
   - pods/portforward
   verbs:

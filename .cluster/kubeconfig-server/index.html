@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Kubeconfig for Kubernetes Workshop</title>
+  <style>
+    * {
+      text-align: center;
+      font-size: x-large;
+    }
+    #resultat pre {
+      margin-top: 2em;
+      padding: 2em;
+      border: 1px solid;
+      text-align: left;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+  </style>
+</head>
+<body>
+  <h1>Kubeconfig for Kubernetes Workshop</h1>
+  <p>Her henter du <a href="https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/">kubeconfig</a> som gir deg aksess på clusteret.</p>
+  <p>Skriv inn brukernavn du har fått på epost.</p>
+  <p>Ikke fått? Be om å få ett av kursholder.</p>
+  <label>Brukernavn <input type="text" id="brukernavn"></label>
+  <button>Vis kubeconfig</button>
+  <div id="resultat"></div>
+  <script>
+    async function vis () {
+      const brukernavn = document.querySelector("#brukernavn").value;
+      if (brukernavn === "") {
+        return;
+      }
+      try {
+        const response = await fetch(brukernavn)
+        if (!response.ok) {
+          const msg = await response.text()
+          return feil(`${response.status} ${response.statusText} body: ${msg}`);
+        }
+
+        const kubeconfig = await response.text()
+        document.querySelector("#resultat").innerHTML = `<p>Lagre innholdet i blokken under som ~/.kube/config:</p><code><pre>${kubeconfig}</pre></code>`;
+      } catch (error) {
+        return feil(error);
+      }
+    }
+
+    function feil(error) {
+      document.querySelector("#resultat").innerHTML = `<b>Feilet:</b><p>${error}</p>`;
+    }
+
+    document.querySelector("button").addEventListener("click", vis);
+    window.addEventListener("keyup", (event) => {
+      if (event.key === "Enter" || event.keyCode === 13) {
+        vis()
+      }
+    })
+  </script>
+</body>
+</html>

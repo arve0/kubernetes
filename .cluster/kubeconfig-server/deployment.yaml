@@ -1,0 +1,97 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubeconfig-server
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: kubeconfig-server
+  template:
+    metadata:
+      labels:
+        app: kubeconfig-server
+    spec:
+      serviceAccountName: kubeconfig-server
+      containers:
+      - name: kubeconfig-server
+        image: registry.apps.workshop.arve.dev/kubeconfig-server
+        resources: {}
+        ports:
+        - name: http
+          protocol: TCP
+          containerPort: 8080
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kubeconfig-server
+  namespace: default
+imagePullSecrets:
+- name: registry-credentials
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: can-read-kubeconfigs
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - get
+  - list
+  resourceNames:
+  - kubeconfig
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: kubeconfig-server-can-read-kubeconfigs
+subjects:
+- kind: ServiceAccount
+  name: kubeconfig-server
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: can-read-kubeconfigs
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kubeconfig-server
+  namespace: default
+spec:
+  selector:
+    app: kubeconfig-server
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: http
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+  name: kubeconfig-server
+  namespace: default
+spec:
+  rules:
+  - host: kubeconfig.apps.workshop.arve.dev
+    http:
+      paths:
+      - backend:
+          service:
+            name: kubeconfig-server
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - kubeconfig.apps.workshop.arve.dev
+    secretName: kubeconfig-server-cert
