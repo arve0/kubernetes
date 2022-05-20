@@ -82,3 +82,5 @@ curl localhost:8080/server-b.<brukernavn>
 ```
 
 Tips: Hvis sidemann ikke er ferdig med forrige oppgave, kan du prøve mot namespacet *elegant-denzil*.
+
+[Neste oppgave lager et eksternt endepunkt for tjenstene.](ekstern-trafikk.md)
