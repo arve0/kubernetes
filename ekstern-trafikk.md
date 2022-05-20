@@ -143,4 +143,20 @@ jeg er server-b
 jeg er server-a
 ```
 
-[Neste oppgave endrer tjenesten mens den er live.](rullerende-deployment.md)
+## TLS
+[cert-manager](https://cert-manager.io) er installert og satt opp med
+[lets-encrypt](https://letsencrypt.org) på clusteret.
+
+For å kryptere et endepunkt, trenger en å spesifisere hvilken *Issuer*
+som skal gi oss sertifikatene:
+
+```sh
+kubectl delete ingress server-a
+kubectl create ingress server-a --rule="a-elegant-denzil.apps.workshop.arve.dev/*=server-a:80,tls=server-a-cert"
+kubectl annotate ingress server-a cert-manager.io/cluster-issuer=letsencrypt
+```
+
+Når `Ingress` har annotasjonen, vil cert-manager opprette `Secret` med navn `server-a-cert`.
+Nginx ingress-controlleren finner så `Secret` og bruker sertifikatet der til å kryptere forbindelsen.
+
+[Neste oppgave er å endre tjenesten mens den er live.](rullerende-deployment.md)
