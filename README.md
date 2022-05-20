@@ -10,6 +10,8 @@ levere tjenester uten driftsstans.
 3. [Deployments](deployment.md)
 4. [Intern trafikk](intern-trafikk.md)
 5. [Ekstern trafikk](ekstern-trafikk.md)
+6. [Rullerende deployment](rullerende-deployment.md)
+7. [Ekstra](ekstra.md)
 
 ## Kursbeskrivelse
 En intro om hva kubernetes tilbyr. Etter introduksjonen arbeides det individuelt med oppgaver.
