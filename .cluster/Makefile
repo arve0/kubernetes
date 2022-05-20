@@ -4,6 +4,7 @@ EMAIL ?= arve+workshop@seljebu.no
 USERNAME ?= arve
 NUMBER_OF_USERS ?= 10
 USERS := $(shell cat usernames 2>/dev/null | sed 's|^|users/|')
+INSTALLED_USERS := $(shell kubectl get secrets -A | grep kubeconfig | cut -f1 -d" ")
 
 all: ingress cert-manager letsencrypt registry
 
@@ -150,15 +151,10 @@ cluster/ca: cluster/kubeconfig
 cluster/server: cluster/kubeconfig
 	yq .clusters[0].cluster.server cluster/kubeconfig > cluster/server
 
-cluster/workshop-role:
-	kubectl create clusterrole workshop --verb="*" --resource=pods
-	touch cluster/workshop-role
-
 users: ${USERS}
-${USERS}: home-kubeconfig rbac cluster/ca cluster/server cluster/workshop-role registry/password
+${USERS}: home-kubeconfig cluster/ca cluster/server
 	mkdir -p $@
 	# create private key
-
 	openssl genrsa -out $@/key 2048
 	# create CertificateSigningRequest
 	user=$(subst users/,,$@) envsubst < user.csr.cnf > $@/csr.cnf
@@ -181,16 +177,21 @@ ${USERS}: home-kubeconfig rbac cluster/ca cluster/server cluster/workshop-role r
 		key=$$(cat $@/key | base64 | tr -d '\n') \
 		envsubst < user.kubeconfig > $@/kubeconfig
 	kubectl create namespace $(subst users/,,$@) || true
-	user=$(subst users/,,$@) \
-		envsubst < rbac-user.yaml \
-		| kubectl apply -f-
-	KUBECONFIG=$@/kubeconfig kubectl run sleeping-beauty --image=busybox --command -- sleep 2592000 || true
-	KUBECONFIG=$@/kubeconfig kubectl delete secret registry-credentials || true
-	KUBECONFIG=$@/kubeconfig kubectl create secret docker-registry registry-credentials \
+	KUBECONFIG=$@/kubeconfig kubectl delete secret kubeconfig || true
+	KUBECONFIG=$@/kubeconfig kubectl create secret generic kubeconfig \
+		--from-file=$@/kubeconfig
+
+user-setup: ${INSTALLED_USERS}
+${INSTALLED_USERS}: rbac registry/password
+	@echo "\n## $@"
+	user=$@ envsubst < rbac-user.yaml | kubectl apply -f-
+	KUBECONFIG=users/$@/kubeconfig kubectl run sleeping-beauty --image=busybox --command -- sleep 2592000 || true
+	KUBECONFIG=users/$@/kubeconfig kubectl delete secret registry-credentials || true
+	KUBECONFIG=users/$@/kubeconfig kubectl create secret docker-registry registry-credentials \
 		--docker-server=registry.apps.${DOMAIN} \
 		--docker-username=${USERNAME} \
 		--docker-password=$$(cat registry/password)
-	KUBECONFIG=$@/kubeconfig kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "registry-credentials"}]}'
+	KUBECONFIG=users/$@/kubeconfig kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "registry-credentials"}]}'
 
 rbac:
 	kubectl apply -f rbac-common.yaml
