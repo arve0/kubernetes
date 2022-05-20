@@ -1,4 +1,4 @@
-# kubernetes workshop
+# Kubernetes workshop
 Kubernetes har blitt en av de mest populære kjøreplattformene for container-applikasjoner.
 I denne workshoppen lærer du deg hvordan kubernetes-plattformen brukes til å kontinuerlig
 levere tjenester uten driftsstans.
@@ -11,8 +11,8 @@ levere tjenester uten driftsstans.
 4. [Intern trafikk](intern-trafikk.md)
 
 ## Kursbeskrivelse
-En intro om hva kubernets tilbyr. Etter introduksjonen arbeides det idividuelt med oppgaver.
-Gjennom oppgavene vil du lære deg å leverer en applikasjon i kubernetes og gjøre en rullende
+En intro om hva kubernetes tilbyr. Etter introduksjonen arbeides det individuelt med oppgaver.
+Gjennom oppgavene vil du lære deg å levere en applikasjon i kubernetes og gjøre en rullende
 oppdatering av applikasjonen uten brudd på tjenesten.
 
 Workshoppen avsluttes med en kahoot.

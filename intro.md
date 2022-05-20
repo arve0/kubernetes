@@ -3,17 +3,17 @@ Kubernetes er en kjøreplattform for containere på [OCI-standarden](https://ope
 
 Kort sagt har Kubernetes ansvaret for
 
-- å holde tjenesten i live
-- horisontalt skalere containere
-- rute trafikk internt mellom tjenester
-- rute ekstern trafikk til tjenesten
-- rullende oppgraderinger
-- mellomlagre logg fra stdout og stderr
-- håndtere konfigurasjon til tjenesten
-- adminstrere lagring til tjenesten
-- med mer
+- Å holde tjenesten i live
+- Horisontalt skalere containere
+- Rute trafikk internt mellom tjenester
+- Rute ekstern trafikk til tjenesten
+- Rullende oppgraderinger
+- Mellomlagre logg fra stdout og stderr
+- Håndtere konfigurasjon til tjenesten
+- Adminstrere lagring til tjenesten
+- Med mer
 
-Adminsitrasjon skjer via ressurser som beskriver tjenestene og deres tilhørende konfigurasjon. Typisk er ressursene serialisert som YAML.
+Administrasjon skjer via ressurser som beskriver tjenestene og deres tilhørende konfigurasjon. Typisk er ressursene serialisert som YAML.
 
 Eksempelvis kan en beskrive en kjørende container som en [`Pod`](https://kubernetes.io/docs/concepts/workloads/pods/):
 
@@ -34,7 +34,7 @@ spec:
 Her er kombinasjonen `apiVersion`, `kind`, `name` og `namespace` unik, slik at den
 brukes som oppslagsnøkkel i databasen. `spec` beskriver hva/hvordan containeren skal kjøre.
 
-## fysiske maskiner
+## Fysiske maskiner
 Vanligvis er det tre maskiner som kjører databasen etcd og
 n-antall worker-noder som kjører arbeidslasten.
 
@@ -85,7 +85,7 @@ n-antall worker-noder som kjører arbeidslasten.
    └──────────────────┘       └──────────────────┘
 ```
 
-## abstraksjoner for arbeidslast
+## Abstraksjoner for arbeidslast
 [`Deployment`](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
 er normalt det en bruker for å kjøre en tjeneste.
 Ansvaret til en `Deployment` er i hovedsak å rullere til neste
@@ -95,17 +95,17 @@ med å slå av forrige versjon til ny variant er oppe og kjører.
 
 For å kjøre tjenesten, delegerer `Deployment` ansvaret videre til
 [`ReplicaSet`](https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/).
-Hovedansvar til `ReplicaSet` er å kjøre et spesifisert antall `Pods`, altså
+Hovedansvaret til `ReplicaSet` er å kjøre et spesifisert antall `Pods`, altså
 horisontal skallering. Dersom en `Pod` forsvinner, vil replica-controlleren
 opprette en ny.
 
 Til slutt har `Pod` ansvaret for å holde container i tjenesten i live. Typisk via
-å starte prosess i container på nytt hvis den dør eller restarte containere dersom
+å starte prosessen i containeren på nytt hvis den dør eller restarte containere dersom
 en [`livenessProbe`](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#types-of-probe)
 feiler.
 
 For å selv utforske ressurs-hierarkiet, kan en se på `metadata.ownerReferences`. Her er en `Pod`
-med navn `tjeneste-a-6dfbb6d557-md5dr` barn av `ReplicaSet` med navn `tjeneste-a-6dfbb6d557`:
+med navn `tjeneste-a-6dfbb6d557-md5dr` som er barn av `ReplicaSet` med navn `tjeneste-a-6dfbb6d557`:
 
 ```yaml
 kind: Pod

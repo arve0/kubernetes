@@ -1,5 +1,5 @@
-# kom i gang
-Når du er ferdig med oppgavene denne siden skal du kunne bruke
+# Kom i gang
+Når du er ferdig med oppgavene på denne siden skal du kunne bruke
 [`kubectl`](https://kubectl.docs.kubernetes.io) til å administrere
 ressurser på kurs-clusteret.
 
@@ -42,7 +42,7 @@ kubectl describe pod hei
 ## Starte egen pod
 `kubectl run` lar deg enkelt starte en pod. Det er nyttig for rask debugging.
 
-Start en pod skriver ut *hei verden*:
+Start en pod som skriver ut *hei verden*:
 
 ```sh
 kubectl run hei --image=busybox --restart=Never --command -- echo hei verden
@@ -75,7 +75,7 @@ Opprett en pod fra pod.yaml:
 kubectl create -f pod.yaml
 ```
 
-Merk: Fikk du feilmeldingen *AlreadyExists*? Da må du slette pod først. Neste steg bruker `Deployment` som er mulig å endre.
+Merk: Fikk du feilmeldingen *AlreadyExists*? Da må du slette poden først. Neste steg bruker `Deployment` som er mulig å endre.
 
 - Hva ble navn på pod?
 - Hva er status til pod?
