@@ -55,6 +55,18 @@ kubectl run hei --image=busybox --restart=Never --command -- echo hei verden
 kubectl logs hei
 ```
 
+## Se ressursbruk til pod
+`kubectl top` viser deg forbruk av CPU og minne til pod:
+
+```sh
+kubectl top pods
+```
+
+En ønsker at `resources.request` under `spec.containers[]` til en `Pod` skal samsvare med hva den bruker.
+Da klarer Kubernetes å fordele lasten utover nodene riktig.
+
+Merk: `kubectl top node` viser ressursbruk på noder.
+
 ## Slett pod
 `kubectl delete` kan brukes for å slette ressurser:
 
