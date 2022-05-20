@@ -5,8 +5,8 @@ ressurser på kurs-clusteret.
 
 0. Installer [kubectl](https://kubectl.docs.kubernetes.io/installation/kubectl/).
 1. Klon dette repoet.
-2. Send en melding på slack til Arve og be om kubeconfig.
-3. Lagre output fra Arve til ~/.kube/config.
+2. [Hent kubeconfig](https://kubeconfig.apps.workshop.arve.dev) med brukernavn fra epost.
+3. Lagre kubeconfig til ~/.kube/config.
 4. Hent pods med `kubectl`:
 
     ```sh

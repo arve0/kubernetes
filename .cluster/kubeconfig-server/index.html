@@ -33,7 +33,7 @@
         return;
       }
       try {
-        const response = await fetch(brukernavn)
+        const response = await fetch("/" + brukernavn)
         if (!response.ok) {
           const msg = await response.text()
           return feil(`${response.status} ${response.statusText} body: ${msg}`);
