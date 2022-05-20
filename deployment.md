@@ -101,3 +101,5 @@ kubectl describe replicaset --selector app=hei
 Normalt er det lite nyttig informasjon på `ReplicaSet`, men det er lurt å vite om
 eierskapet `Deployment` -> `ReplicaSet` -> `Pod` når en skal debugge en tjeneste
 som ikke kommer opp.
+
+[Neste oppgave er intern trafikk i cluster.](intern-trafikk.md)

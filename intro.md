@@ -140,3 +140,5 @@ Hvilken ressurs kan kjøre opp en ny variant av tjenesten før forrige variant f
 - Deployment
 - ReplicaSet
 - Pod
+
+[Kom i gang.](start.md)
