@@ -43,12 +43,12 @@ Dette burde du ha installert på din PC for å utnytte tiden best under workshop
   wsl --install -d ubuntu
   ```
 
-  Merk: [Debian 9 har en sertifikat-feil](https://serverfault.com/questions/1079199/client-on-debian-9-erroneously-reports-expired-certificate-for-letsencrypt-issue),
-  derfor anbefales Ubuntu. Debian 10 er ikke tilgjengelig på WSL per mai 2022.
-
   En ny terminal åpner som spør om brukernavn og passord. Passord brukes i `sudo` kommandoer senere, husk det.
 
   Terminalen med Ubuntu brukes for alle kommandoer i kurset. Om du trenger flere terminaler, kan du åpne *PowerShell* og skrive `wsl`.
+
+  Merk: [Debian 9 har en sertifikat-feil](https://serverfault.com/questions/1079199/client-on-debian-9-erroneously-reports-expired-certificate-for-letsencrypt-issue),
+  derfor anbefales Ubuntu. Debian 10 er ikke tilgjengelig på WSL per mai 2022.
 
 - [kubectl](https://kubectl.docs.kubernetes.io/installation/kubectl/):
 
