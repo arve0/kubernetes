@@ -43,7 +43,7 @@ Dette burde du ha installert på din PC for å utnytte tiden best under workshop
   wsl --install -d ubuntu
   ```
 
-  En ny terminal åpner som spør om brukernavn og passord. Passord brukes i `sudo` kommandoer senere, husk det.
+  En ny terminal åpner som spør om brukernavn og passord. Passord brukes i `sudo`-kommandoer senere, husk det.
 
   Terminalen med Ubuntu brukes for alle kommandoer i kurset. Om du trenger flere terminaler, kan du åpne *PowerShell* og skrive `wsl`.
 
