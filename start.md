@@ -3,13 +3,36 @@ Når du er ferdig med oppgavene på denne siden skal du kunne bruke
 [`kubectl`](https://kubectl.docs.kubernetes.io) til å administrere
 ressurser på kurs-clusteret.
 
-0. Installer [kubectl](https://kubectl.docs.kubernetes.io/installation/kubectl/).
+0. Les [seksjonen Nødvendig programvare i README](README.md).
 1. Klon dette repoet.
-2. [Hent kubeconfig](https://kubeconfig.apps.workshop.arve.dev) med brukernavn fra epost.
-3. Lagre kubeconfig til *~/.kube/config*.
 
-    **OBS!** Hvis du har en *~/.kube/config* som du allerede bruker, ta vare på den. Alternativt
-    er det mulig å bruke environment-variabelen [`KUBECONFIG`](https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/).
+    ```sh
+    git clone https://github.com/arve0/kubernetes
+    cd kubernetes
+    ```
+
+2. Hvis du har en *~/.kube/config* som du allerede bruker, ta backup av den:
+
+    ```sh
+    if [[ -f ~/.kube/config ]]; then cp ~/.kube/config ~/.kube/config.backup; fi
+    ```
+
+    Alternativt er det mulig å bruke environment-variabelen
+    [`KUBECONFIG`](https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/):
+
+    ```sh
+    export KUBECONFIG=<path-til-kubeconfig>
+    ```
+
+3. [Hent](https://kubeconfig.apps.workshop.arve.dev) og lagre kubeconfig til *~/.kube/config*:
+
+    ```sh
+    curl https://kubeconfig.apps.workshop.arve.dev/<ditt-brukernavn-fra-epost> > ~/.kube/config
+    ```
+
+    Ikke fått brukernavn på epost? Ta kontakt med en av kursholderne.
+
+    Feilet med "SSL certificate problem: certificate has expired" på Windows WSL / Debian 9? Les [løsning på Server Fault](https://serverfault.com/a/1079226/317247).
 
 4. Hent pods med `kubectl`:
 
