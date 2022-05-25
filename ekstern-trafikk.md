@@ -8,6 +8,10 @@ kunne sette eget hostname og rute ulike paths til ulike tjenester.
 Ressursen `Ingress` er en ressurs for å rute HTTP-trafikk. Spesifikasjonen
 har en rekke regler, som hver har `host`, `path` og en tilhørende `service`.
 
+- `host` er hostname, altså DNS-navnet til tjenesten.
+- `path` er path til HTTP-forespørsel.
+- `service` er en Kubernetes service, slik som ble opprettet i [intern trafikk](intern-trafikk.md).
+
 ```yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -45,7 +49,7 @@ Lag en `Ingress` som:
   med ditt brukernavn.
 - Ruter trafikk til `b-<brukernavn>.apps.workshop.arve.dev/*` mot service `server-b`.
 
-Merk: `host` må være `<navn>.apps.workshop.arve.dev` der `<navn>` ikke inneholder punktum,
+**Merk:** `host` må være `<navn>.apps.workshop.arve.dev` der `<navn>` ikke inneholder punktum,
 ettersom DNS for *.apps.workshop.arve.dev peker til clusteret. Dersom du velger et `<navn>`
 som allerede er i bruk, vil du få en feilmelding tilsvarende denne:
 

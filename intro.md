@@ -35,7 +35,7 @@ Her er kombinasjonen `apiVersion`, `kind`, `name` og `namespace` unik, slik at d
 brukes som oppslagsnøkkel i databasen. `spec` beskriver hva/hvordan containeren skal kjøre.
 
 ## Fysiske maskiner
-Vanligvis er det tre maskiner som kjører databasen etcd og
+Vanligvis er det tre maskiner som kjører databasen [etcd](https://etcd.io) og
 n-antall worker-noder som kjører arbeidslasten.
 
 ```

@@ -6,7 +6,11 @@ ressurser på kurs-clusteret.
 0. Installer [kubectl](https://kubectl.docs.kubernetes.io/installation/kubectl/).
 1. Klon dette repoet.
 2. [Hent kubeconfig](https://kubeconfig.apps.workshop.arve.dev) med brukernavn fra epost.
-3. Lagre kubeconfig til ~/.kube/config.
+3. Lagre kubeconfig til *~/.kube/config*.
+
+    **OBS!** Hvis du har en *~/.kube/config* som du allerede bruker, ta vare på den. Alternativt
+    er det mulig å bruke environment-variabelen [`KUBECONFIG`](https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/).
+
 4. Hent pods med `kubectl`:
 
     ```sh
@@ -33,7 +37,7 @@ Alle kommandoer har `--help`:
 kubectl get --help
 ```
 
-`kubectl explain` gir en forklarer ressurser:
+`kubectl explain` forklarer ressurser:
 
 ```sh
 kubectl explain pod
@@ -46,10 +50,10 @@ kubectl explain pod.spec.containers
 ```
 
 ## Status til pod
-`kubectl describe` gir en formatert variant av `yaml` eller `json` serialiseringen:
+`kubectl describe` gir en tekst-formatert variant av ressursen, med samme informasjon som i `yaml`-serialiseringen:
 
 ```sh
-kubectl describe pod hei
+kubectl describe pod sleeping-beauty
 ```
 
 ## Starte egen pod
@@ -78,7 +82,7 @@ kubectl top pods
 En ønsker at `resources.request` under `spec.containers[]` til en `Pod` skal samsvare med hva den bruker.
 Da klarer Kubernetes å fordele lasten utover nodene riktig.
 
-Merk: `kubectl top node` viser ressursbruk på noder.
+Merk: `kubectl top nodes` viser ressursbruk på noder.
 
 ## Slett pod
 `kubectl delete` kan brukes for å slette ressurser:
@@ -90,7 +94,7 @@ kubectl delete pod/hei pod/sleeping-beauty
 Merk: Det kan ta litt tid før *sleeping-beauty* slettes. Les mer om terminering i guiden [terminating with grace](https://cloud.google.com/blog/products/containers-kubernetes/kubernetes-best-practices-terminating-with-grace).
 
 ## Opprette pod med yaml-manifest
-Valigvis ønsker en å ta vare på kjørekonfigurasjonen. YAML gir en
+Vanligvis ønsker en å ta vare på kjørekonfigurasjonen. YAML gir en
 lesbar serialisering av ressursene i clusteret som en kan versjonskontrollere
 med git.
 
