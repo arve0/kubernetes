@@ -52,11 +52,21 @@ Dette burde du ha installert på din PC for å utnytte tiden best under workshop
 
 - [kubectl](https://kubectl.docs.kubernetes.io/installation/kubectl/):
 
+  Linux og Windows WSL:
+
   ```sh
   sudo curl "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl" \
     --location \
     --output /usr/local/bin/kubectl
   sudo chmod +x /usr/local/bin/kubectl
   ```
+
+  Mac, homebrew:
+
+  ```sh
+  brew install kubectl
+  ```
+
+  Annet? Se [installasjonsguide for kubectl](https://kubectl.docs.kubernetes.io/installation/kubectl/).
 
 - teksteditor med YAML-støtte
