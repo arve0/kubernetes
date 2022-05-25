@@ -33,7 +33,6 @@ Deltaker burde ha kjennskap til hvordan en bygger og publiserer en applikasjon s
 ### Nødvendig programvare
 Dette burde du ha installert på din PC for å utnytte tiden best under workshoppen:
 
-- [kubectl](https://kubectl.docs.kubernetes.io/installation/kubectl/)
 - POSIX-terminal med `curl`, `git` og `tr`.
 
   **Bruker du Windows?** Bruk [WSL](https://docs.microsoft.com/en-us/windows/wsl/install).
@@ -49,9 +48,9 @@ Dette burde du ha installert på din PC for å utnytte tiden best under workshop
 
   En ny terminal åpner som spør om brukernavn og passord. Passord brukes i `sudo` kommandoer senere, husk det.
 
-  Terminalen med Ubuntu brukes for alle kommandoer i kurset.
+  Terminalen med Ubuntu brukes for alle kommandoer i kurset. Om du trenger flere terminaler, kan du åpne *PowerShell* og skrive `wsl`.
 
-  Installer `kubectl`:
+- [kubectl](https://kubectl.docs.kubernetes.io/installation/kubectl/):
 
   ```sh
   sudo curl "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl" \
@@ -59,7 +58,5 @@ Dette burde du ha installert på din PC for å utnytte tiden best under workshop
     --output /usr/local/bin/kubectl
   sudo chmod +x /usr/local/bin/kubectl
   ```
-
-  Om du trenger flere terminaler, kan du åpne *PowerShell* og skrive `wsl`.
 
 - teksteditor med YAML-støtte
