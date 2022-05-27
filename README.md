@@ -11,7 +11,8 @@ levere tjenester uten driftsstans.
 4. [Intern trafikk](intern-trafikk.md)
 5. [Ekstern trafikk](ekstern-trafikk.md)
 6. [Rullerende deployment](rullerende-deployment.md)
-7. [Ekstra (ikke del av kurs)](ekstra.md)
+7. [Hindre nedetid](hindre-nedetid.md)
+8. [Ekstra (ikke del av kurs)](ekstra.md)
 
 ## Kursbeskrivelse
 En intro om hva kubernetes tilbyr. Etter introduksjonen arbeides det individuelt med oppgaver.
@@ -26,6 +27,7 @@ Workshoppen avsluttes med en kahoot.
 - Kan rute trafikk til tjenesten innad i cluster med en Service.
 - Kan rute trafikk til tjenesten utad clusteret med en Ingress.
 - Kan gjøre en rullende oppdatering av applikasjonen uten brudd på tjenesten.
+- Hindre nedetid ved å bruke `readinessProbe` og `livenessProbe`.
 
 ### Forhåndskunnskap
 Deltaker burde ha kjennskap til hvordan en bygger og publiserer en applikasjon som et Docker image.

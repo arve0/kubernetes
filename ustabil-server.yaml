@@ -1,0 +1,69 @@
+---
+# De tre bindestrekene angir at vi har en liste med ressurser.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ustabil-server
+spec:
+  rules:
+  - host: $HOST.apps.workshop.arve.dev
+    http:
+      paths:
+      - backend:
+          service:
+            name: ustabil-server
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ustabil-server
+spec:
+  selector:
+    app: ustabil-server
+  ports:
+  - port: 80 # port til service
+    protocol: TCP
+    # Port på pod, enten navn eller nummer.
+    # Navn lar oss endre port på pod uten å endre service.
+    targetPort: http
+---
+apiVersion: apps/v1
+# bruker StatefulSet for å starte to ulike utgaver
+# av tjenesten, en som dør etter 60 sekund og en
+# annen som dør etter 120 sekund
+kind: StatefulSet
+metadata:
+  name: ustabil-server
+spec:
+  replicas: 2
+  serviceName: ustabil-server
+  selector:
+    matchLabels:
+      app: ustabil-server
+  template:
+    metadata:
+      labels:
+        app: ustabil-server
+        reconcile: ustabil-server-1
+    spec:
+      # raskere omstart av container
+      terminationGracePeriodSeconds: 1
+      containers:
+      - name: ustabil-server
+        # implementasjonen ligger i ustabil-server/server.js
+        image: registry.apps.workshop.arve.dev/ustabil-server
+        resources: {}
+        # bruk navn til å finne ut hvem av replicas vi er
+        env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        ports:
+        - name: http
+          containerPort: 8080
+---

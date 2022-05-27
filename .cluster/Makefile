@@ -202,4 +202,9 @@ server: registry-login
 	docker tag server registry.apps.${DOMAIN}/server
 	docker push registry.apps.${DOMAIN}/server
 
+ustabil-server: registry-login
+	docker build -t ustabil-server ../ustabil-server
+	docker tag ustabil-server registry.apps.${DOMAIN}/ustabil-server
+	docker push registry.apps.${DOMAIN}/ustabil-server
+
 FORCE:

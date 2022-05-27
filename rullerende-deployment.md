@@ -54,4 +54,4 @@ Og hvor mange pods som kan slettes uten å forrige tjenesten, `maxUnavailable`.
 Alternativet til *RollingUpdate* er *Recreate* som vil slette alle pods, før den
 oppretter nye.
 
-[Ferdig? Her er noen ekstra-oppgaver.](ekstra.md)
+[Neste oppgave er å hindre nedetid for en ustabil tjeneste.](hindre-nedetid.md)
