@@ -5,5 +5,5 @@ NESTE:
 - ✅ csr med https://www.digitalocean.com/community/tutorials/recommended-steps-to-secure-a-digitalocean-kubernetes-cluster
 - ✅ rbac
 - ✅ load-balancer
-- oppgaver
-- admission controller for ingress
+- ✅ oppgaver
+- quiz
