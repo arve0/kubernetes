@@ -6,7 +6,7 @@ til å rute trafikk internt i cluster til podene som kjører tjenesten.
 ## Om Service
 Siden pods kan oppstå og forsvinne brukes abstraksjonen `Service`
 for å finne tjenester. En `Service` peker til en eller flere `Pod`
-med labels og spesifiserer hvilken port trafikken kan gå på.
+med labels og spesifiserer hvilken port trafikken går på.
 
 ```yaml
 apiVersion: v1
