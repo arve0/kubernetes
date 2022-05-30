@@ -27,7 +27,7 @@ ressurser på kurs-clusteret.
 3. [Hent](https://kubeconfig.apps.workshop.arve.dev) og lagre kubeconfig til *~/.kube/config*:
 
     ```sh
-    curl https://kubeconfig.apps.workshop.arve.dev/<ditt-brukernavn-fra-epost> > ~/.kube/config
+    curl https://kubeconfig.apps.workshop.arve.dev/<brukernavn-fra-epost> > ~/.kube/config
     ```
 
     Ikke fått brukernavn på epost? Ta kontakt med en av kursholderne.

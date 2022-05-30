@@ -31,7 +31,7 @@ Målet er å oppnå en så stabil tjeneste som mulig, uten å endre
 Start med å definere hostname for tjenesten:
 
 ```sh
-export HOST=ustabil-<ditt-brukernavn>
+export HOST=ustabil-<brukernavn>
 ```
 
 `$HOST` brukes i [ustabil-server.yaml](ustabil-server.yaml),

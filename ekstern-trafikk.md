@@ -85,8 +85,8 @@ Naivt kan en prøve å opprette ingress:
 
 ```sh
 kubectl create ingress kombinert \
-  --rule='<ditt-brukernavn>.apps.workshop.arve.dev/a/*=server-a:80' \
-  --rule='<ditt-brukernavn>.apps.workshop.arve.dev/b/*=server-b:80'
+  --rule='<brukernavn>.apps.workshop.arve.dev/a/*=server-a:80' \
+  --rule='<brukernavn>.apps.workshop.arve.dev/b/*=server-b:80'
 ```
 
 Men forespørsler til tjenesten feiler:
@@ -112,8 +112,8 @@ Istedenfor å "fikse" tjenesten, kan vi lage en
 ```sh
 kubectl delete ingress kombinert
 kubectl create ingress kombinert \
-  --rule='<ditt-brukernavn>.apps.workshop.arve.dev/a(/|$)(.*)=server-a:80' \
-  --rule='<ditt-brukernavn>.apps.workshop.arve.dev/b(/|$)(.*)=server-b:80'
+  --rule='<brukernavn>.apps.workshop.arve.dev/a(/|$)(.*)=server-a:80' \
+  --rule='<brukernavn>.apps.workshop.arve.dev/b(/|$)(.*)=server-b:80'
 kubectl annotate ingress kombinert nginx.ingress.kubernetes.io/rewrite-target='/$2'
 ```
 
@@ -156,7 +156,7 @@ som skal gi oss sertifikatene:
 
 ```sh
 kubectl delete ingress server-a
-kubectl create ingress server-a --rule="a-<ditt-brukernavn>.apps.workshop.arve.dev/*=server-a:80,tls=server-a-cert"
+kubectl create ingress server-a --rule="a-<brukernavn>.apps.workshop.arve.dev/*=server-a:80,tls=server-a-cert"
 kubectl annotate ingress server-a cert-manager.io/cluster-issuer=letsencrypt
 ```
 
@@ -166,7 +166,7 @@ Nginx ingress-controlleren finner så `Secret` og bruker sertifikatet der til å
 Test med `curl`:
 
 ```sh
-curl https://a-<ditt-brukernavn>.apps.workshop.arve.dev/
+curl https://a-<brukernavn>.apps.workshop.arve.dev/
 ```
 
 [Neste oppgave er å endre tjenesten mens den er live.](rullerende-deployment.md)
