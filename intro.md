@@ -129,13 +129,13 @@ Hvilken controller/abstraksjon har ansvaret for å holde container i live?
 - ReplicaSet
 - Pod
 
-Hvilken ressurs brukes vanligvis når en ønsker en kjørende tjeneste?
+Hvilken ressurs holder x antall Pods tilstede?
 
 - Deployment
 - ReplicaSet
 - Pod
 
-Hvilken ressurs kan kjøre opp en ny variant av tjenesten før forrige variant fjernes?
+Hvilken ressurs brukes når en ønsker en langtkjørende tjeneste som skal endres i sitt livsløp?
 
 - Deployment
 - ReplicaSet
