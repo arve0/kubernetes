@@ -4,7 +4,7 @@ EMAIL ?= arve+workshop@seljebu.no
 USERNAME ?= arve
 NUMBER_OF_USERS ?= 10
 USERS := $(shell cat usernames 2>/dev/null | sed 's|^|users/|')
-INSTALLED_USERS := $(shell kubectl get secrets -A | grep kubeconfig | cut -f1 -d" ")
+INSTALLED_USERS := $(shell kubectl get secrets -A | grep kubeconfig | cut -f1 -d" " | grep -v default)
 
 all: ingress cert-manager letsencrypt registry
 
@@ -178,9 +178,8 @@ ${USERS}: home-kubeconfig cluster/ca cluster/server
 		key=$$(cat $@/key | base64 | tr -d '\n') \
 		envsubst < user.kubeconfig > $@/kubeconfig
 	kubectl create namespace $(subst users/,,$@) || true
-	KUBECONFIG=$@/kubeconfig kubectl delete secret kubeconfig || true
-	KUBECONFIG=$@/kubeconfig kubectl create secret generic kubeconfig \
-		--from-file=$@/kubeconfig
+	kubectl delete secret kubeconfig -n $(subst users/,,$@) || true
+	kubectl create secret generic kubeconfig -n $(subst users/,,$@) --from-file=$@/kubeconfig
 
 user-setup: ${INSTALLED_USERS}
 ${INSTALLED_USERS}: rbac registry/password
