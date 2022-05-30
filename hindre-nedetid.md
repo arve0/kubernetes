@@ -4,7 +4,7 @@ Når du er ferdig med oppgavene på denne siden skal du kunne bruke
 til å holde en ustabil tjeneste oppe.
 
 I [Rullerende deployment](rullerende-deployment.md) endret vi tjenesten,
-uten at det medførste driftsstans. Hvis en ikke definerer noe annet,
+uten at det medførte driftsstans. Hvis en ikke definerer noe annet,
 vil Kubernetes sende trafikk til tjenesten så snart prosessen i container
 kjører. For veldig enkle tjenester er dette nok, men for tjenester som
 krasjer vil en snart oppleve nedetid.
@@ -22,7 +22,7 @@ Helseprober har vi ikke tatt i bruk. Her skal vi bruke `readinessProbe` og `live
 
 ## Start en ustabil tjeneste
 Først trenger vi å kjøre en ustabil tjeneste. For kurset er det opprettet
-[en server som tilfeldig feiler](ustabil-server/server.js) åtte forespørsler
+[en server som tilfeldig feiler](ustabil-server/server.js) fire forespørsler
 etter hverandre, samt dør helt etter 60 eller 80 sekunder.
 
 Målet er å oppnå en så stabil tjeneste som mulig, uten å endre
@@ -119,6 +119,12 @@ Aktiver endringen:
 envsubst < ustabil-server.yaml | kubectl apply -f -
 ```
 
+Hvis endringen ikke ble aktiv, prøv å slette podene:
+
+```sh
+kubectl delete pod -l app=ustabil-server
+```
+
 Nå skal tjenesten klare å holde seg oppe, med noen feilende
 forespørsler.
 
@@ -135,4 +141,4 @@ Du er nå ferdig. Sjekk om du har kontroll på
 [Oppnådd kompetanse i README](README.md). Hvis ikke, spør
 en av kursholderne.
 
-[Lyst på noen ekstra oppgaver?](ekstra.md)
+[Lyst å lære mer? Les ekstra-oppgavene.](ekstra.md)

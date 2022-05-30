@@ -35,7 +35,7 @@ spec:
         resources: {}
         env:
         - name: NAME
-          value: HAHA
+          value: server-a
         ports:
         - name: http
           containerPort: 8080

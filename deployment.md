@@ -36,12 +36,12 @@ spec:
 
 Under `spec.template.spec` finner vi `spec` til `Pod` som vi så i [pod.yaml](pod.yaml).
 
-I tillegg har vi `repliacas`, `selector` og `template.metadata`.
+I tillegg har vi `replicas`, `selector` og `template.metadata`.
 
 `replicas` bestemmer hvor mange pods som skal kjøre.
 
 `selector` sier hvordan deployment-controlleren skal finne pods som er sine. Her er det vanlig
-å bruke samme navn som tjenesten. `tempalte.metadata` setter den aktuelle labelen på `Pod`.
+å bruke samme navn som tjenesten. `template.metadata` setter den aktuelle labelen på `Pod`.
 
 Resulterende `Pod` blir noe slikt som under *(har fjernet detaljer som er uviktige)*:
 
@@ -77,7 +77,7 @@ kubectl apply -f deployment.yaml
 - Hva skjer om du sletter pods med `kubectl delete pods --selector app=hei --wait=false`?
 
 ## Endre en deployment
-Åpne [deployment.yaml] og endre spesifikasjonen til å skrive ut dato istedenfor *"hei"*.
+Åpne [deployment.yaml](deployment.yaml) og endre spesifikasjonen til å skrive ut dato istedenfor *"hei"*.
 
 Oppdater clusteret med den nye spesifikasjonen:
 
