@@ -88,6 +88,11 @@ kubectl explain pod.spec.containers
 kubectl describe pod sleeping-beauty
 ```
 
+`describe` gir også *Events*, som er nyttig dersom noe er feilet. For eksempel om den ikke
+klarte laste ned image, eller om en container er restartet pga minnebruk (OutOfMemory).
+Merk at standard levetid (retention) for Events er en time. Normalt sendes Events til
+et eksternt loggsystem for å ta vare på de.
+
 ## Starte egen pod
 `kubectl run` lar deg enkelt starte en pod. Det er nyttig for rask debugging.
 
