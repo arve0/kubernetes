@@ -11,28 +11,37 @@ ressurser på kurs-clusteret.
     cd kubernetes
     ```
 
-2. Hvis du har en *~/.kube/config* som du allerede bruker, ta backup av den:
+2. [Hent](https://kubeconfig.apps.workshop.arve.dev) og lagre kubeconfig:
+
+    ```sh
+    curl https://kubeconfig.apps.workshop.arve.dev/<brukernavn-fra-epost> > kubeconfig
+    ```
+
+    Ikke fått brukernavn på epost? Ta kontakt med en av kursholderne.
+
+    Feilet med "SSL certificate problem: certificate has expired" på Windows WSL / Debian 9? Les [løsning på Server Fault](https://serverfault.com/a/1079226/317247).
+
+3. Aktiver kubeconfig.
+
+    Hvis du har en *~/.kube/config* som du allerede bruker, ta backup av den:
 
     ```sh
     if [[ -f ~/.kube/config ]]; then cp ~/.kube/config ~/.kube/config.backup; fi
+    ```
+
+    Aktiver kubeconfig ved å flytte den til standardlokasjon:
+
+    ```sh
+    mkdir -p ~/.kube
+    mv kubeconfig ~/.kube/config
     ```
 
     Alternativt er det mulig å bruke environment-variabelen
     [`KUBECONFIG`](https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/):
 
     ```sh
-    export KUBECONFIG=<path-til-kubeconfig>
+    export KUBECONFIG=$(pwd)/kubeconfig
     ```
-
-3. [Hent](https://kubeconfig.apps.workshop.arve.dev) og lagre kubeconfig til *~/.kube/config*:
-
-    ```sh
-    curl https://kubeconfig.apps.workshop.arve.dev/<brukernavn-fra-epost> > ~/.kube/config
-    ```
-
-    Ikke fått brukernavn på epost? Ta kontakt med en av kursholderne.
-
-    Feilet med "SSL certificate problem: certificate has expired" på Windows WSL / Debian 9? Les [løsning på Server Fault](https://serverfault.com/a/1079226/317247).
 
 4. Hent pods med `kubectl`:
 
