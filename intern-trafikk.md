@@ -63,8 +63,8 @@ curl localhost:8080/server-a # rekursivt en gang
 Se loggen til servere:
 
 ```sh
-kubectl logs $(kubectl get pods --selector app=server-a -o name)
-kubectl logs $(kubectl get pods --selector app=server-b -o name)
+kubectl logs deployment/server-a
+kubectl logs deployment/server-b
 ```
 
 ## Kalle andre tjenester i clusteret
