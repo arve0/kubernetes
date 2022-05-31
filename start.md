@@ -33,7 +33,7 @@ ressurser på kurs-clusteret.
 
     ```sh
     mkdir -p ~/.kube
-    mv kubeconfig ~/.kube/config
+    cp kubeconfig ~/.kube/config
     ```
 
     Alternativt er det mulig å bruke environment-variabelen
