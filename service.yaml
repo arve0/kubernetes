@@ -19,7 +19,7 @@ kind: Deployment
 metadata:
   name: server-a
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: server-a
@@ -32,13 +32,25 @@ spec:
       - name: server-a
         # implementasjonen ligger i server/server.js
         image: registry.apps.workshop.arve.dev/server
-        resources: {}
         env:
         - name: NAME
           value: server-a
         ports:
         - name: http
           containerPort: 8080
+        resources:
+          limits:
+            # CPU begrenses når CPU-bruk på node er høy og CPU-bruk til
+            # container er mer enn 0.01 (10 milli) CPU-kjerner.
+            cpu: 100m
+            # Stopper container med OutOfMemory-feil dersom 10 MiByte nås.
+            memory: 100Mi
+          requests:
+            # Normal CPU-/minnebruk. Hjelper Kubernetes å fordele last på noder,
+            # samt administratorer å ressursplanlegge. Burde være samme som
+            # gjennomsnittlig forbruk, se `kubectl top pod`.
+            cpu: 2m
+            memory: 15Mi
 ---
 # gjentar det over med navnet "server-b"
 apiVersion: v1
@@ -58,7 +70,7 @@ kind: Deployment
 metadata:
   name: server-b
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: server-b
@@ -70,10 +82,22 @@ spec:
       containers:
       - name: server-b
         image: registry.apps.workshop.arve.dev/server
-        resources: {}
         env:
         - name: NAME
           value: server-b
         ports:
         - name: http
           containerPort: 8080
+        resources:
+          limits:
+            # CPU begrenses når CPU-bruk på node er høy og CPU-bruk til
+            # container er mer enn 0.01 (10 milli) CPU-kjerner.
+            cpu: 100m
+            # Stopper container med OutOfMemory-feil dersom 10 MiByte nås.
+            memory: 100Mi
+          requests:
+            # Normal CPU-/minnebruk. Hjelper Kubernetes å fordele last på noder,
+            # samt administratorer å ressursplanlegge. Burde være samme som
+            # gjennomsnittlig forbruk, se `kubectl top pod`.
+            cpu: 2m
+            memory: 15Mi

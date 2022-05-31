@@ -56,7 +56,6 @@ spec:
       - name: ustabil-server
         # implementasjonen ligger i ustabil-server/server.js
         image: registry.apps.workshop.arve.dev/ustabil-server
-        resources: {}
         # bruk navn til å finne ut hvem av replicas vi er
         env:
         - name: POD_NAME
@@ -66,4 +65,17 @@ spec:
         ports:
         - name: http
           containerPort: 8080
+        resources:
+          limits:
+            # CPU begrenses når CPU-bruk på node er høy og CPU-bruk til
+            # container er mer enn 0.01 (10 milli) CPU-kjerner.
+            cpu: 100m
+            # Stopper container med OutOfMemory-feil dersom 10 MiByte nås.
+            memory: 100Mi
+          requests:
+            # Normal CPU-/minnebruk. Hjelper Kubernetes å fordele last på noder,
+            # samt administratorer å ressursplanlegge. Burde være samme som
+            # gjennomsnittlig forbruk, se `kubectl top pod`.
+            cpu: 2m
+            memory: 10Mi
 ---

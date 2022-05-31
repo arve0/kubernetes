@@ -17,6 +17,19 @@ spec:
       containers:
       - name: hei
         image: busybox
-        resources: {}
         command: ["/bin/sh"]
         args: ["-c", "while true; do echo hei; sleep 10; done"]
+        # CPU/minne grense og forespørsel
+        resources:
+          limits:
+            # CPU begrenses når CPU-bruk på node er høy og CPU-bruk til
+            # container er mer enn 0.01 (10 milli) CPU-kjerner.
+            cpu: 10m
+            # Stopper container med OutOfMemory-feil dersom 10 MiByte nås.
+            memory: 10Mi
+          requests:
+            # Normal CPU-/minnebruk. Hjelper Kubernetes å fordele last på noder,
+            # samt administratorer å ressursplanlegge. Burde være samme som
+            # gjennomsnittlig forbruk, se `kubectl top pod`.
+            cpu: 1m
+            memory: 1Mi
