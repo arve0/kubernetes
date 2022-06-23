@@ -128,7 +128,8 @@ I annotasjonen `nginx.ingress.kubernetes.io/rewrite-target` skrives path om til 
 Merk: Her må en bruke enkel tekstfnutt `'/$2'` for å unnga at `$` ekspanderer i shellet,
 vs `"/$2"` som ikke vil fungere.
 
-Oppgave: Lag en `Ingress` med navn *kombinert* som sender alt under `/a` til *server-a*
+## Oppgave
+Lag en `Ingress` med navn *kombinert* som sender alt under `/a` til *server-a*
 og alt under `/b` til *server-b*.
 
 Sjekk at den fungerer:

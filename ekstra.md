@@ -14,7 +14,7 @@ Stegene vil cirka være:
 - Definer tjenesten med `Deployment`, `Service` og `Ingress`.
 
 ## Enkel manifest templating
-Likevel om abstraksjonene har sin funksjon, vil de fleste tjenester har tilnærmet like
+Likevel om abstraksjonene har sin funksjon, vil de fleste tjenester ha tilnærmet like
 ressurser. Navn er kanskje byttet ut, image, osv. Templating er å lage en fast base og
 bytte ut de tingene som endrer seg.
 

@@ -28,15 +28,15 @@ til pods med label `app=hei` på port 8080.
 
 ## En enkel proxy tjeneste
 Mappen [server](server) inneholder en implementasjon av en enkel proxy-server.
-Serveren vil gjøre en HTTP-forespørsel mot host fra path. For eksempel vil
+Koden vil gjøre en HTTP-forespørsel mot host fra path. For eksempel vil
 `curl server` svare med navnet på server og `curl server/arve.dev` vil
 videresende svaret fra `curl arve.dev`.
 
-Denne serveren er tilgjengelig som docker image `registry.apps.workshop.arve.dev/server`
+Denne koden er tilgjengelig som docker image `registry.apps.workshop.arve.dev/server`
 innad i clusteret.
 
-[service.yaml](service.yaml) inneholder ressurser for å kjøre serveren på clusteret med
-to `Service` og to `Deployment`. Navn på tjenesten er *server-a* og *server-b*.
+[service.yaml](service.yaml) inneholder ressurser for å kjøre tjenesten på clusteret med
+to `Service` og to `Deployment`. Navn på tjenestene er *server-a* og *server-b*.
 
 Deploy tjenestene til clusteret:
 
@@ -97,5 +97,7 @@ curl localhost:8080/server-b.<brukernavn>
 ```
 
 Tips: Hvis sidemann ikke er ferdig med forrige oppgave, kan du prøve mot namespacet *elegant-denzil*.
+
+Før du går videre, stopp port-forward med CTRL-C.
 
 [Neste oppgave lager et eksternt endepunkt for tjenstene.](ekstern-trafikk.md)

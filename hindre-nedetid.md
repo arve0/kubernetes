@@ -85,12 +85,47 @@ Aktiver endringen:
 envsubst < ustabil-server.yaml | kubectl apply -f -
 ```
 
-Nå burde vi se at tjenesten feiler kun en gang før den andre tar over all trafikk.
+Nå burde vi se at tjenesten feiler kun en gang før den andre tar over trafikken.
+
+```
+Thu Jun 23 10:44:10 CEST 2022 jeg er ustabil-server-1 en ustabil server som dør etter 80 sekunder Internal server error: Feil nr 3/4.
+Thu Jun 23 10:44:11 CEST 2022 jeg er ustabil-server-0 en ustabil server som dør etter 60 sekunder
+Thu Jun 23 10:44:12 CEST 2022 jeg er ustabil-server-0 en ustabil server som dør etter 60 sekunder
+Thu Jun 23 10:44:13 CEST 2022 jeg er ustabil-server-0 en ustabil server som dør etter 60 sekunder
+Thu Jun 23 10:44:14 CEST 2022 jeg er ustabil-server-0 en ustabil server som dør etter 60 sekunder
+```
+
+Merk at _ustabil-server-1_ ikke svarer, men ustabil-server-0. Pod er ikke _ready_ på
+grunn av proben vi la til.
+
 Også, når ustabil-server-0 krasjer helt etter 60 sekund, skal vi se kun
 svar fra ustabil-server-1 en stund før alle request feiler med
 *503 Service Temporarily Unavailable*.
 
-`kubectl describe` viser at proben har feilet:
+```
+Thu Jun 23 10:44:32 CEST 2022 jeg er ustabil-server-0 en ustabil server som dør etter 60 sekunder
+... 20 requests til - ingen svar fra ustabil-server-0 her
+Thu Jun 23 10:45:48 CEST 2022 jeg er ustabil-server-1 en ustabil server som dør etter 80 sekunder
+Thu Jun 23 10:45:49 CEST 2022 jeg er ustabil-server-1 en ustabil server som dør etter 80 sekunder
+Thu Jun 23 10:45:50 CEST 2022 jeg er ustabil-server-1 en ustabil server som dør etter 80 sekunder
+Thu Jun 23 10:45:51 CEST 2022 jeg er ustabil-server-1 en ustabil server som dør etter 80 sekunder
+Thu Jun 23 10:45:52 CEST 2022 <html>
+<head><title>503 Service Temporarily Unavailable</title></head>
+<body>
+<center><h1>503 Service Temporarily Unavailable</h1></center>
+<hr><center>nginx</center>
+</body>
+</html>
+Thu Jun 23 10:45:53 CEST 2022 <html>
+<head><title>503 Service Temporarily Unavailable</title></head>
+<body>
+<center><h1>503 Service Temporarily Unavailable</h1></center>
+<hr><center>nginx</center>
+</body>
+</html>
+```
+
+`kubectl describe` viser at proben har feilet for begge pods:
 
 ```sh
 kubectl describe pods -l app=ustabil-server
@@ -113,6 +148,9 @@ livenessProbe:
   failureThreshold: 5 # fem feil -> omstart pod
 ```
 
+Liveness-proben skal på samme sted som readiness-proben, under
+`statefulset.spec.template.spec.containers`.
+
 Aktiver endringen:
 
 ```sh
@@ -134,7 +172,8 @@ kubectl get pods -l app=ustabil-server
 
 Merk at vi gjorde `readiness` mer aggressiv enn `liveness`.
 Det er en god strategi for å så raskt som mulig skifte trafikk
-over til friske pods, men ikke la de feile for evig.
+over til friske pods, la syke pods få tid til å bli friske igjen,
+og hvis ikke omstarte de.
 
 Om du kjører tjenesten lenge, vil den likevel være ustabil,
 ettersom *ustabil-server* er ekstremt ustabil. Når en pod
