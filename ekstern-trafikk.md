@@ -37,7 +37,7 @@ En enklere måte å definere det samme på er med `kubectl create ingress`:
 kubectl create ingress server-a --rule="a-elegant-denzil.apps.workshop.arve.dev/*=server-a:80"
 ```
 
-Her er `server-a-elegant-denzil.apps.workshop.arve.dev/*` både `host`, `path` og `pathType`, hvor
+Her er `a-elegant-denzil.apps.workshop.arve.dev/*` både `host`, `path` og `pathType`, hvor
 `*` indikerer `pathType=Prefix`. Bak `=` er service som skal motta trafikken. `:80` er porten som
 service lytter på.
 
@@ -163,7 +163,13 @@ kubectl annotate ingress server-a cert-manager.io/cluster-issuer=letsencrypt
 Når `Ingress` har annotasjonen, vil cert-manager opprette `Secret` med navn `server-a-cert`.
 Nginx ingress-controlleren finner så `Secret` og bruker sertifikatet der til å kryptere forbindelsen.
 
-Test med `curl`:
+For å se secrets:
+
+```sh
+kubectl get secrets
+```
+
+Når secret `server-a-cert` er på plass, kan du kalle tjenesten:
 
 ```sh
 curl https://a-<brukernavn>.apps.workshop.arve.dev/

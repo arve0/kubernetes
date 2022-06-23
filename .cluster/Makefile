@@ -41,6 +41,11 @@ cluster/install: cluster/region cluster/size cluster/version
 		--output json \
 		| tee cluster/install
 
+cluster/metrics: cluster/install
+	doctl kubernetes 1-click install $$(jq -r '.[0].id' cluster/install) \
+		--1-clicks metrics-server \
+		| tee cluster/metrics
+
 cluster/kubeconfig: cluster/install
 	doctl kubernetes cluster kubeconfig show $(subst .,-,${DOMAIN}) \
 		| tee cluster/kubeconfig
@@ -114,7 +119,7 @@ registry-login: registry/password
 	docker login registry.apps.${DOMAIN} --username ${USERNAME} --password-stdin < registry/password
 
 list-repos: registry/password
-	curl -u arve:$$(cat registry/password) https://registry.apps.arve.dev/v2/_catalog
+	curl -u arve:$$(cat registry/password) https://registry.apps.${DOMAIN}/v2/_catalog
 
 docker-pull-secret: registry/password
 	kubectl delete secret registry-credentials -n default || true

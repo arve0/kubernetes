@@ -117,16 +117,20 @@ Aktiver endringen:
 
 ```sh
 envsubst < ustabil-server.yaml | kubectl apply -f -
-```
-
-Hvis endringen ikke ble aktiv, prøv å slette podene:
-
-```sh
 kubectl delete pod -l app=ustabil-server
 ```
 
+Av en eller annen grunn detekterer ikke Kubernetes endringen i pod-template,
+så vi må slette pods for å få den oppdaterte spesifikasjonen.
+
 Nå skal tjenesten klare å holde seg oppe, med noen feilende
 forespørsler.
+
+En skal se at podene restartes når de krasjer for godt:
+
+```sh
+kubectl get pods -l app=ustabil-server
+```
 
 Merk at vi gjorde `readiness` mer aggressiv enn `liveness`.
 Det er en god strategi for å så raskt som mulig skifte trafikk

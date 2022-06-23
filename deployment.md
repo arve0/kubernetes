@@ -75,6 +75,7 @@ kubectl apply -f deployment.yaml
 - Hva skjer om du kjører kommandoen flere ganger?
 - Se om du finner tilhørende pods med `kubectl get pods --selector app=hei`.
 - Hva skjer om du sletter pods med `kubectl delete pods --selector app=hei --wait=false`?
+- Hvor mye CPU og minne ber deploymenten om? Stemmer det med faktisk ressursbruk?
 
 ## Endre en deployment
 Åpne [deployment.yaml](deployment.yaml) og endre spesifikasjonen til å skrive ut dato istedenfor *"hei"*.

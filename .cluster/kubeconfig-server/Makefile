@@ -1,3 +1,5 @@
+all: build publish deploy
+
 build: Dockerfile
 	docker build --tag kubeconfig-server .
 

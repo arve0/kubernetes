@@ -88,7 +88,7 @@ kubectl explain pod.spec.containers
 kubectl describe pod sleeping-beauty
 ```
 
-`describe` gir også *Events*, som er nyttig dersom noe er feilet. For eksempel om den ikke
+`describe` gir også *Events*, som er nyttig dersom noe har feilet. For eksempel om den ikke
 klarte laste ned image, eller om en container er restartet pga minnebruk (OutOfMemory).
 Merk at standard levetid (retention) for Events er en time. Normalt sendes Events til
 et eksternt loggsystem for å ta vare på de.
@@ -116,10 +116,16 @@ kubectl logs hei
 kubectl top pods
 ```
 
-En ønsker at `resources.request` under `spec.containers[]` til en `Pod` skal samsvare med hva den bruker.
-Da klarer Kubernetes å fordele lasten utover nodene riktig.
+En ønsker at faktisk ressursbruk og forespurte ressurser er lik,
+slik at Kubernetes klarerå fordele lasten utover nodene riktig.
+Mer om ressursbruk i [Deployment](deployment.md).
 
-Merk: `kubectl top nodes` viser ressursbruk på noder.
+Ressursbruk til noder vises med:
+
+```sh
+kubectl top nodes
+```
+
 
 ## Slett pod
 `kubectl delete` kan brukes for å slette ressurser:

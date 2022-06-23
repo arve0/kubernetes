@@ -38,7 +38,9 @@ Fri May 20 23:08:13 CEST 2022 jeg er HAHA
 Fri May 20 23:08:14 CEST 2022 jeg er HAHA
 ```
 
-På ett tidspunkt er begge tjenestene oppe, som kalles *RollingUpdate* som er standardinnstillingen:
+På ett tidspunkt er begge tjenestene oppe, og noen ganger kan en se at
+det veksler mellom hvilken pod som svarer. Dette kalles *RollingUpdate*
+som er standardinnstillingen:
 
 ```sh
 ❯ kubectl get deployment server-a -o yaml | yq .spec.strategy
