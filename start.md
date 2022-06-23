@@ -153,6 +153,6 @@ Merk: Fikk du feilmeldingen *AlreadyExists*? Da må du slette poden først. [Nes
 - Hva er status til pod?
 - Hvor mange containere kjører den?
 - Hva deler containerne? Hint: Les [pod.yaml](pod.yaml).
-- Logger den noe? Hint: bruk `--container` eller `-c`.
+- Logger den noe? Hint: Bruk `--container` eller `-c` i `kubectl logs` for å velge container.
 
 [Neste oppgave er Deployments.](deployment.md)
