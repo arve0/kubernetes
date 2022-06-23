@@ -67,6 +67,21 @@ kubectl logs deployment/server-a
 kubectl logs deployment/server-b
 ```
 
+## Om navn som går igjen og igjen og igjen
+Hvis du leste [service.yaml](service.yaml) lurer du kanskje på hvorfor navnet _server-a_
+går igjen over alt? Det er navn på ressursene, det brukes i label `app` og i navn til container.
+
+Grunnen er at Kubernetes er designet for å være en generisk løsning, der byggeklossene skal
+kunne dekke alle behov. For enkle tjenester blir navnet repetivt, som trigger trangen til å
+lage ulike (lure) navn.
+
+Hold tilbake trangen, for det er mye enklere å få oversikt dersom navnet er likt.
+Hvilken `Deployment` er det som `Service` peker til? Lese spesifikasjonen og `labels`
+eller lete etter noe med samme navn? Å bruke samme navn reduserer kompleksiteten.
+
+Løsningen for å slippe det gjentagende er å bruke templating, som du kan se noe av i
+[hindre nedetid](hindre-nedetid.md) og [ekstraoppgavene](ekstra.md).
+
 ## Kalle andre tjenester i clusteret
 DNS-oppslag uten . vil prøve å finne en tjeneste i samme
 [namespace](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/).
