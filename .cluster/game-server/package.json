@@ -1,0 +1,16 @@
+{
+  "name": "game-server",
+  "version": "1.0.0",
+  "description": "Viser kubeconfig for ønsket brukernavn.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "sound-play": "^1.1.0"
+  }
+}

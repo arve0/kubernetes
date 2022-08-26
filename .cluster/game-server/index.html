@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Kubernetes Workshop</title>
+  <style>
+    * {
+      text-align: center;
+      font-size: x-large;
+    }
+    #resultat pre {
+      margin-top: 2em;
+      padding: 2em;
+      border: 1px solid;
+      text-align: left;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+  </style>
+</head>
+<body>
+  <h1>Kubernetes Workshop</h1>
+  <div id=output></div>
+  <div id="resultat"></div>
+  <script>
+    async function vis () {
+      const playersResponse = await fetch("/players");
+      if (!playersResponse.ok) {
+        return
+      }
+      const players = await playersResponse.json();
+      const playerRows = players.map(player => `<tr><th>${player.name}</th><td>${player.level * 100}<td></tr>`).join("\n")
+      document.querySelector("#output").innerHTML = `<table>${playerRows}</table>`;
+    }
+
+    setInterval(vis, 1000);
+  </script>
+</body>
+</html>
